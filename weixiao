@@ -1,0 +1,32 @@
+# -*- coding: utf-8 -*-
+from selenium import webdriver
+from time import sleep
+#实例化出一个chrome浏览器
+driver = webdriver.Chrome("C:\Python27\Scripts\chromedriver")
+
+#设置浏览器窗口的位置和大小
+driver.set_window_position(20, 40)
+driver.set_window_size(1100,700)
+
+ticket_url = "http://weixiao.qq.com/home/bonus/mission_hall"
+count = 0
+
+#打开一个页面（登录页）
+driver.get('http://weixiao.qq.com/')
+driver.find_element_by_id("user-login").click()
+#登录表单在页面的框架中，所以要切换到该框架
+driver.switch_to_frame('login_frame')
+#通过使用选择器选择到表单元素进行模拟输入和点击按钮提交
+driver.find_element_by_id('switcher_plogin').click()
+driver.find_element_by_id('u').clear()
+driver.find_element_by_id('u').send_keys('account')
+driver.find_element_by_id('p').clear()
+driver.find_element_by_id('p').send_keys('password')
+driver.find_element_by_id('login_button').click()
+sleep(1)
+driver.find_element_by_class_name('menu-icon-bonus').click()
+while driver.current_url == ticket_url:
+                driver.find_element_by_class_name('chance-p').click()
+                count += 1
+                print u"循环点击... 第 %s 次" % count
+                sleep(1)
